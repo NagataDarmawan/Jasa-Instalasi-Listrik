@@ -28,8 +28,17 @@ const waLink = `https://wa.me/${waNumber}?text=Halo%20Bregas%20Elektrik,%20saya%
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
     
     <div class="space-y-4">
-      <a href="/" class="flex items-center gap-2 font-black text-lg tracking-wider text-white">
-        <span class="text-accent text-xl">⚡</span> BREGAS ELEKTRIK
+      <!-- PERBAIKAN: Mengganti emoji petir dengan <img /> dan membagi warna teks brand -->
+      <a href="/" class="flex items-center gap-2 font-black text-lg tracking-wider">
+        <img 
+          src="/logo-bregas.jpeg" 
+          alt="Logo Bregas Elektrik" 
+          class="w-8 h-8 rounded-md object-cover"
+        />
+        <span class="flex gap-1.5">
+          <span class="text-white">BREGAS</span>
+          <span class="text-accent">ELEKTRIK</span>
+        </span>
       </a>
       <p class="text-text-light/80 text-xs sm:text-sm leading-relaxed font-normal text-left">
         Penyedia jasa rekayasa instalasi kelistrikan profesional berstandar nasional PUIL (Persyaratan Umum Instalasi Listrik) & SNI. Kami mengedepankan aspek proteksi dini dan keselamatan kerja K3.
@@ -96,7 +105,6 @@ const waLink = `https://wa.me/${waNumber}?text=Halo%20Bregas%20Elektrik,%20saya%
         </li>
       </ul>
 
-      {/* TANPA GARIS DAN GABUNG: Langsung menyatu di bawah list kontak khusus mobile */}
       <div class="block sm:hidden pt-2 space-y-2 text-xs font-bold uppercase tracking-wider text-text-light/70">
         <a href="/kebijakanPrivasi" class="block hover:text-accent transition-colors py-1">Kebijakan Privasi</a>
         <a href="/syaratKetentuan" class="block hover:text-accent transition-colors py-1">Syarat & Ketentuan</a>
