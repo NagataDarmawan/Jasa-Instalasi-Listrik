@@ -1,7 +1,7 @@
 ---
 // src/components/SemuaProyek.astro
 import { Building2, Calendar, CheckCircle2, ImageOff, ArrowLeft } from 'lucide-astro';
-import Footer from '../components/Footer.astro'; // Mengimpor komponen Footer
+import Footer from '../components/Footer.astro'; 
 import '../styles/global.css';
 
 const allProjects = [
@@ -18,69 +18,82 @@ const allProjects = [
 ];
 ---
 
-<section id="semua-proyek" class="py-24 bg-background flex flex-col min-h-screen justify-between">
-  <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 mb-auto">
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar Proyek Portfolio Kelistrikan</title>
+</head>
+<body class="bg-background text-text-main flex flex-col min-h-screen relative overflow-x-hidden">
+
+  {/* Menggunakan padding kecil di mobile (py-10) agar hemat ruang */}
+  <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-20 md:py-24">
     
-    <div class="mb-8 text-left">
+    <div class="mb-6 text-left">
       <a 
-        href="#portfolio" 
-        class="inline-flex items-center gap-2 text-sm font-semibold text-text-light hover:text-accent transition-colors group"
+        href="/#portfolio" 
+        class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-text-light hover:text-accent transition-colors group"
       >
-        <ArrowLeft class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" /> 
+        <ArrowLeft class="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" /> 
         Kembali ke Proyek
       </a>
     </div>
 
-    <div class="mb-16 text-center">
-      <h2 class="text-xs font-bold tracking-wider uppercase text-accent mb-2">Portfolio Lengkap</h2>
-      <p class="text-3xl md:text-4xl font-extrabold text-primary">Daftar Proyek Kami</p>
-      <div class="w-16 h-1 bg-accent mx-auto mt-5"></div>
+    <div class="mb-10 text-center">
+      <h2 class="text-[10px] sm:text-xs font-bold tracking-wider uppercase text-accent mb-1.5">Portfolio Lengkap</h2>
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary tracking-tight">Daftar Proyek Kami</h1>
+      <div class="w-12 sm:w-16 h-1 bg-accent mx-auto mt-3 sm:mt-4"></div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
       {allProjects.map((project) => (
-        <div class="bg-surface border border-border-custom rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all group">
+        <div class="w-full bg-surface border border-border-custom rounded-xl overflow-hidden shadow-xs hover:shadow-md transition-all group flex flex-col justify-between">
           
-          <div class="h-40 bg-slate-100 relative overflow-hidden flex flex-col items-center justify-center">
-            <div class="absolute inset-0 flex flex-col items-center justify-center text-slate-400 group-hover:text-accent transition-colors">
-              <ImageOff class="w-8 h-8 stroke-[1.5]" />
-              <span class="text-[10px] uppercase tracking-widest font-semibold mt-1 opacity-60">Pratinjau</span>
+          <div>
+            <div class="h-40 bg-background relative overflow-hidden flex flex-col items-center justify-center border-b border-border-custom/40">
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-text-light/40 group-hover:text-accent transition-colors">
+                <ImageOff class="w-7 h-7 stroke-[1.5]" />
+                <span class="text-[9px] uppercase tracking-widest font-semibold mt-1 opacity-60">Pratinjau</span>
+              </div>
+
+              <img 
+                src={project.img} 
+                alt={project.title} 
+                class="w-full h-full object-cover relative z-10 opacity-100 transition-opacity duration-300"
+                onerror="this.style.opacity='0'"
+              />
             </div>
 
-            <img 
-              src={project.img} 
-              alt={project.title}
-              class="w-full h-full object-cover relative z-10 opacity-100 transition-opacity duration-300"
-              onerror="this.style.opacity='0'"
-            />
+            <div class="p-4 sm:p-5">
+              <div class="flex justify-between items-center gap-2 mb-2.5">
+                <span class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-accent bg-accent/10 px-2 py-0.5 rounded max-w-[140px] sm:max-w-none truncate block">
+                  {project.category}
+                </span>
+                <span class="flex items-center gap-1 text-[9px] sm:text-[10px] text-text-light font-medium shrink-0">
+                  <Calendar class="w-3 h-3" /> {project.year}
+                </span>
+              </div>
+              
+              <h3 class="font-bold text-primary text-sm leading-snug transition-colors line-clamp-2">
+                {project.title}
+              </h3>
+            </div>
           </div>
 
-          <div class="p-5">
-            <div class="flex justify-between items-start mb-3">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-accent bg-accent/10 px-2 py-0.5 rounded">
-                {project.category}
-              </span>
-              <span class="flex items-center gap-1 text-[10px] text-text-light font-medium">
-                <Calendar class="w-3 h-3" /> {project.year}
-              </span>
-            </div>
-            
-            <h3 class="font-bold text-primary text-sm leading-snug group-hover:text-accent transition-colors">
-              {project.title}
-            </h3>
-            
-            <div class="mt-4 pt-4 border-t border-border-custom">
-              <span class="flex items-center gap-1.5 text-[11px] font-bold text-emerald-600">
-                <CheckCircle2 class="w-3 h-3" /> Selesai
+          <div class="px-4 sm:px-5 pb-4 sm:pb-5">
+            <div class="pt-3 border-t border-border-custom">
+              <span class="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-bold text-emerald-600">
+                <CheckCircle2 class="w-3 h-3 text-emerald-500" /> Selesai
               </span>
             </div>
           </div>
+
         </div>
       ))}
     </div>
-  </div>
+  </main>
 
-  <div class="w-full mt-24">
-    <Footer />
-  </div>
-</section>
+  <Footer />
+</body>
+</html>

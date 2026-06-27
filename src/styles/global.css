@@ -21,3 +21,17 @@
   --text-light: #64748B;
   --border: #E2E8F0;
 }
+
+/* Membuat scroll halaman menjadi halus saat link jangkar (#) diklik */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Efek kartu proyek sedikit terangkat dan bayangan menebal saat hover */
+.project-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}

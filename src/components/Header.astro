@@ -8,7 +8,7 @@ const navItems = [
   { name: 'Beranda', href: '#' },
   { name: 'Tentang Kami', href: '#tentang' }, // Penamaan diperbarui menjadi Tentang Kami, mengarah ke #tentang
   { name: 'Layanan', href: '/#layanan' },
-  { name: 'Portfolio', href: '/#portfolio' }, 
+  { name: 'Proyek', href: '/#portfolio' }, // PERBAIKAN: Mengubah nama dari Portfolio menjadi Proyek tanpa mengubah nilai href
   { name: 'FAQ', href: '/#faq' },
   { name: 'Kontak', href: '/#kontak' },
 ];
@@ -153,7 +153,6 @@ const catalogLink = "/catalogLayanan";
     let currentActiveHref = '#'; 
 
     if (scrollPosition > 50) {
-      // PERBAIKAN: Mengubah target id dari 'tentang kami' menjadi 'tentang' agar sesuai dengan berkas struktur ID HTML target
       const sections = ['tentang', 'layanan', 'alurPengerjaan', 'portfolio', 'testimoni', 'faq', 'kontak'];
       let activeSectionId = null;
 
@@ -161,13 +160,12 @@ const catalogLink = "/catalogLayanan";
         const element = document.getElementById(id);
         if (element) {
           const rect = element.getBoundingClientRect();
-          if (rect.top <= navbarHeight + 10) { // Menambahkan offset kecil agar pendeteksian scroll lebih presisi
+          if (rect.top <= navbarHeight + 10) {
             activeSectionId = id;
           }
         }
       }
 
-      // PERBAIKAN: Penyesuaian pengecekan ID aktif ke '#tentang'
       if (activeSectionId === 'tentang') {
         currentActiveHref = '#tentang';
       } else if (activeSectionId === 'layanan' || activeSectionId === 'alurPengerjaan') {
@@ -214,7 +212,7 @@ const catalogLink = "/catalogLayanan";
         link.classList.remove('text-slate-700', 'hover:bg-slate-50');
       } else {
         link.classList.remove('bg-accent/10', 'text-accent', 'font-bold');
-        link.classList.add('text-slate-700', 'hover:bg-slate-50', 'hover:text-accent'); // Memastikan kelas hover di mobile tetap aktif saat tidak terpilih
+        link.classList.add('text-slate-700', 'hover:bg-slate-50', 'hover:text-accent');
       }
     });
   };
