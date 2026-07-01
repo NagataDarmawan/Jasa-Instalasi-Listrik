@@ -8,7 +8,6 @@ const navItems = [
   { name: 'Beranda', href: '#' },
   { name: 'Tentang Kami', href: '/#tentang' }, 
   { name: 'Layanan', href: '/#layanan' },
-    // PERBAIKAN: Menambahkan Alur Pengerjaan di sini
   { name: 'Alur Pengerjaan', href: '/#alurPengerjaan' }, 
   { name: 'Proyek', href: '/#portfolio' }, 
   { name: 'FAQ', href: '/#faq' },
@@ -125,149 +124,153 @@ const catalogLink = "/catalogLayanan";
 </header>
 
 <script>
-  const header = document.getElementById('main-header');
-  const brandFirst = document.getElementById('brand-first');
-  const brandSecond = document.getElementById('brand-second');
-  const menuBtn = document.getElementById('menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const hamburgerIcon = document.getElementById('hamburger-icon');
-  const closeIcon = document.getElementById('close-icon');
-  const navLinks = document.querySelectorAll('.nav-link');
+  const setupNavbar = () => {
+    const header = document.getElementById('main-header');
+    const brandFirst = document.getElementById('brand-first');
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
+    const navLinks = document.querySelectorAll('.nav-link');
 
-  const handleScroll = () => {
-    const scrollPosition = window.scrollY;
-    const navbarHeight = 100;
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const navbarHeight = 100;
 
-    if (scrollPosition > 20) {
-      header?.classList.remove('bg-transparent', 'border-transparent');
-      header?.classList.add('bg-surface/70', 'backdrop-blur-md', 'border-border-custom/50', 'shadow-xs');
-      
-      brandFirst?.classList.remove('text-white');
-      brandFirst?.classList.add('text-primary');
-      
-      if (closeIcon?.classList.contains('hidden')) {
-        menuBtn?.classList.remove('text-accent');
-        menuBtn?.classList.add('text-primary');
+      // 1. Logika Perubahan Desain Header Saat Scroll
+      if (scrollPosition > 20) {
+        header?.classList.remove('bg-transparent', 'border-transparent');
+        header?.classList.add('bg-surface/70', 'backdrop-blur-md', 'border-border-custom/50', 'shadow-xs');
+        
+        brandFirst?.classList.remove('text-white');
+        brandFirst?.classList.add('text-primary');
+        
+        if (closeIcon?.classList.contains('hidden')) {
+          menuBtn?.classList.remove('text-accent');
+          menuBtn?.classList.add('text-primary');
+        }
+      } else {
+        header?.classList.add('bg-transparent', 'border-transparent');
+        header?.classList.remove('bg-surface/70', 'backdrop-blur-md', 'border-border-custom/50', 'shadow-xs');
+        
+        brandFirst?.classList.remove('text-primary');
+        brandFirst?.classList.add('text-white');
+        
+        menuBtn?.classList.remove('text-primary');
+        menuBtn?.classList.add('text-accent');
       }
-    } else {
-      header?.classList.add('bg-transparent', 'border-transparent');
-      header?.classList.remove('bg-surface/70', 'backdrop-blur-md', 'border-border-custom/50', 'shadow-xs');
-      
-      brandFirst?.classList.remove('text-primary');
-      brandFirst?.classList.add('text-white');
-      
-      menuBtn?.classList.remove('text-primary');
-      menuBtn?.classList.add('text-accent');
-    }
 
-    let currentActiveHref = '#'; 
+      // 2. TENTUKAN MENU AKTIF BERDASARKAN POSISI SCROLL
+      let currentActiveHref = '#'; 
 
-    if (scrollPosition > 50) {
-      const sections = ['tentang', 'layanan', 'alurPengerjaan', 'portfolio', 'testimoni', 'faq', 'kontak'];
-      let activeSectionId = null;
+      if (scrollPosition > 50) {
+        const sections = ['tentang', 'layanan', 'alurPengerjaan', 'portfolio', 'faq', 'kontak'];
+        let activeSectionId = null;
 
-      for (const id of sections) {
-        const element = document.getElementById(id);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= navbarHeight + 10) {
-            activeSectionId = id;
+        for (const id of sections) {
+          const element = document.getElementById(id);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            if (rect.top <= navbarHeight + 20) {
+              activeSectionId = id;
+            }
           }
         }
+
+        // PERBAIKAN: Menyamakan format string eksak dengan properti href di atas (menggunakan /#)
+        if (activeSectionId === 'tentang') {
+          currentActiveHref = '/#tentang';
+        } else if (activeSectionId === 'layanan') {
+          currentActiveHref = '/#layanan';
+        } else if (activeSectionId === 'alurPengerjaan') {
+          currentActiveHref = '/#alurPengerjaan';
+        } else if (activeSectionId === 'portfolio') {
+          currentActiveHref = '/#portfolio'; 
+        } else if (activeSectionId === 'faq') {
+          currentActiveHref = '/#faq';
+        } else if (activeSectionId === 'kontak') {
+          currentActiveHref = '/#kontak';
+        }
       }
 
-      if (activeSectionId === 'tentang') {
-        currentActiveHref = '#tentang';
-      } else if (activeSectionId === 'layanan') {
-        currentActiveHref = '/#layanan';
-      } else if (activeSectionId === 'alurPengerjaan') {
-        currentActiveHref = '#alurPengerjaan'; // Perbaikan logika aktif saat scroll
-      } else if (activeSectionId === 'portfolio' || activeSectionId === 'testimoni') {
-        currentActiveHref = '/#portfolio'; 
-      } else if (activeSectionId === 'faq') {
-        currentActiveHref = '/#faq';
-      } else if (activeSectionId === 'kontak') {
+      // Paksa kontak aktif jika sudah mentok scroll di dasar halaman
+      if (window.innerHeight + scrollPosition >= document.documentElement.scrollHeight - 20) {
         currentActiveHref = '/#kontak';
       }
-    }
 
-    if (window.innerHeight + scrollPosition >= document.documentElement.scrollHeight - 20) {
-      currentActiveHref = '/#kontak';
-    }
+      // 3. TERAPKAN WARNA AKTIF & HOVER PADA DESKTOP NAV
+      navLinks.forEach(link => {
+        link.classList.remove('text-accent', 'text-white', 'border-white', 'text-text-main', 'hover:text-white', 'hover:text-accent', 'border-b-2', 'border-accent', 'pb-1');
+        
+        const href = link.getAttribute('href');
+        const isCurrentActive = href === currentActiveHref;
 
-    navLinks.forEach(link => {
-      link.classList.remove('text-accent', 'text-white', 'border-white', 'text-text-main', 'hover:text-white', 'hover:text-accent', 'border-b-2', 'border-accent');
-      
-      const href = link.getAttribute('href');
-      const isCurrentActive = href === currentActiveHref;
-
-      if (scrollPosition > 20) {
-        if (isCurrentActive) {
-          link.classList.add('text-accent', 'border-b-2', 'border-accent');
+        if (scrollPosition > 20) {
+          if (isCurrentActive) {
+            link.classList.add('text-accent', 'border-b-2', 'border-accent', 'pb-1');
+          } else {
+            link.classList.add('text-text-main', 'hover:text-accent');
+          }
         } else {
-          link.classList.add('text-text-main', 'hover:text-accent');
+          if (isCurrentActive) {
+            link.classList.add('text-accent', 'border-b-2', 'border-accent', 'pb-1');
+          } else {
+            link.classList.add('text-accent', 'hover:text-white');
+          }
         }
-      } else {
-        if (isCurrentActive) {
-          link.classList.add('text-accent', 'border-b-2', 'border-accent');
+      });
+
+      // 4. TERAPKAN WARNA AKTIF PADA MOBILE NAV
+      const mobileLinks = mobileMenu?.querySelectorAll('a:not([href*="catalog"])');
+      mobileLinks?.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentActiveHref) {
+          link.classList.add('bg-accent/10', 'text-accent', 'font-bold');
+          link.classList.remove('text-slate-700', 'hover:bg-slate-50');
         } else {
-          link.classList.add('text-accent', 'hover:text-white');
+          link.classList.remove('bg-accent/10', 'text-accent', 'font-bold');
+          link.classList.add('text-slate-700', 'hover:bg-slate-50', 'hover:text-accent');
         }
-      }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Trigger sekali di awal render
+
+    // --- MANAJEMEN MOBILE MENU ---
+    const mobileLinks = mobileMenu?.querySelectorAll('a');
+    mobileLinks?.forEach(link => {
+      link.addEventListener('click', () => {
+        const href = link.getAttribute('href');
+        if (href && (href.startsWith('#') || href.includes('#'))) {
+          mobileMenu?.classList.add('hidden');
+          hamburgerIcon?.classList.remove('hidden');
+          closeIcon?.classList.add('hidden');
+          
+          if (window.scrollY <= 20) {
+            header?.classList.remove('bg-surface/70', 'backdrop-blur-md');
+            header?.classList.add('bg-transparent');
+            menuBtn?.classList.remove('text-primary');
+            menuBtn?.classList.add('text-accent');
+          }
+        }
+      });
     });
 
-    const mobileLinks = mobileMenu?.querySelectorAll('a:not([href="' + header?.querySelector('a[href*="catalog"]') + '"])');
-    mobileLinks?.forEach(link => {
-      const href = link.getAttribute('href');
-      if (href === currentActiveHref) {
-        link.classList.add('bg-accent/10', 'text-accent', 'font-bold');
-        link.classList.remove('text-slate-700', 'hover:bg-slate-50');
-      } else {
-        link.classList.remove('bg-accent/10', 'text-accent', 'font-bold');
-        link.classList.add('text-slate-700', 'hover:bg-slate-50', 'hover:text-accent');
+    menuBtn?.addEventListener('click', () => {
+      mobileMenu?.classList.toggle('hidden');
+      hamburgerIcon?.classList.toggle('hidden');
+      closeIcon?.classList.toggle('hidden');
+      
+      if (window.scrollY <= 20) {
+        header?.classList.toggle('bg-surface/70');
+        header?.classList.toggle('backdrop-blur-md');
+        header?.toggleAttribute('bg-transparent');
       }
     });
   };
 
-  window.addEventListener('scroll', handleScroll);
-  window.addEventListener('DOMContentLoaded', handleScroll);
-
-  const mobileLinks = mobileMenu?.querySelectorAll('a');
-  mobileLinks?.forEach(link => {
-    link.addEventListener('click', () => {
-      const href = link.getAttribute('href');
-      if (href && (href.startsWith('#') || href.includes('#'))) {
-        mobileMenu?.classList.add('hidden');
-        hamburgerIcon?.classList.remove('hidden');
-        closeIcon?.classList.add('hidden');
-        
-        if (window.scrollY <= 20) {
-          header?.classList.remove('bg-surface/70', 'backdrop-blur-md');
-          header?.classList.add('bg-transparent');
-          menuBtn?.classList.remove('text-primary');
-          menuBtn?.classList.add('text-accent');
-        }
-      }
-    });
-  });
-
-  menuBtn?.addEventListener('click', () => {
-    mobileMenu?.classList.toggle('hidden');
-    hamburgerIcon?.classList.toggle('hidden');
-    closeIcon?.classList.toggle('hidden');
-    
-    if (window.scrollY <= 20) {
-      header?.classList.toggle('bg-surface/70');
-      header?.classList.toggle('backdrop-blur-md');
-      header?.classList.toggle('bg-transparent');
-    }
-
-    if (!closeIcon?.classList.contains('hidden')) {
-      menuBtn?.classList.remove('text-primary');
-      menuBtn?.classList.add('text-accent');
-    } else if (window.scrollY > 20) {
-      menuBtn?.classList.remove('text-accent');
-      menuBtn?.classList.add('text-primary');
-    }
-  });
+  // Jalankan skrip saat DOM siap dan dukung siklus halaman SPA Astro
+  document.addEventListener('DOMContentLoaded', setupNavbar);
+  document.addEventListener('astro:page-load', setupNavbar);
 </script>
