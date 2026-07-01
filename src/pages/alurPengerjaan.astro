@@ -13,7 +13,9 @@ const langkahs = [
 ];
 ---
 
-<section id="alur-kerja" class="py-24 bg-primary border-b border-white/[0.08] overflow-hidden">
+{/* PERBAIKAN: Mengubah id dari 'alur-kerja' menjadi 'alurPengerjaan' agar sesuai dengan target Navbar */}
+{/* Tambahan scroll-mt-24 memberikan jarak margin atas agar tidak tertutup header saat discroll */}
+<section id="alurPengerjaan" class="scroll-mt-24 py-24 bg-primary border-b border-white/[0.08] overflow-hidden">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <div class="text-center max-w-3xl mx-auto mb-20">
@@ -98,7 +100,7 @@ const langkahs = [
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  const setupWorkflow = () => {
     const triggers = document.querySelectorAll('.workflow-btn, .workflow-title-trigger');
 
     triggers.forEach(trigger => {
@@ -132,19 +134,17 @@ const langkahs = [
 
         // JIKA SEBELUMNYA BELUM TERBUKA -> BERI EFEK AKTIF NYALA KUNING ACCENT PADA JUDUL/NOMOR & DESKRIPSI PUTIH
         if (!isOpen) {
-          // 1. Munculkan teks deskripsi dengan warna putih
           if (currentContent) {
             currentContent.classList.remove('max-h-0', 'opacity-0');
             currentContent.classList.add('max-h-24', 'opacity-100');
           }
 
-          // 2. Aktifkan tombol lingkaran & teks judul/nomor target menjadi warna aksen kuning agar menonjol di atas bg-biru
           const activeButtons = document.querySelectorAll(`.workflow-btn[data-target="${targetId}"]`);
           const activeContainers = document.querySelectorAll(`.workflow-title-trigger[data-target="${targetId}"]`);
 
           activeButtons.forEach(btn => {
             btn.classList.remove('bg-primary', 'border-white/30', 'text-white');
-            btn.classList.add('border-accent', 'bg-accent', 'text-primary'); // Ikon tengah ikut berubah
+            btn.classList.add('border-accent', 'bg-accent', 'text-primary'); 
           });
 
           activeContainers.forEach(container => {
@@ -152,13 +152,17 @@ const langkahs = [
             const num = container.querySelector('.workflow-num');
             
             h4?.classList.remove('text-white/60');
-            h4?.classList.add('text-accent'); // Judul menjadi Kuning Accent kontras
+            h4?.classList.add('text-accent'); 
             
             num?.classList.remove('text-white/40');
-            num?.classList.add('text-accent'); // Nomor menjadi Kuning Accent kontras
+            num?.classList.add('text-accent'); 
           });
         }
       });
     });
-  });
+  };
+
+  // Berjalan di awal muat halaman dan mendukung siklus rute SPA Astro
+  document.addEventListener('DOMContentLoaded', setupWorkflow);
+  document.addEventListener('astro:page-load', setupWorkflow);
 </script>

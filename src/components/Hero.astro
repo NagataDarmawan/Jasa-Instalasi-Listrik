@@ -1,24 +1,22 @@
 ---
 // src/components/Hero.astro
-import { PhoneCall, FileText, Sparkles } from 'lucide-astro';
+import { PhoneCall, Sparkles } from 'lucide-astro';
 
 const waNumber = "6285712425961"; 
 
 const msgKonsultasi = encodeURIComponent("Halo Bregas Elektrik, saya ingin berkonsultasi mengenai layanan instalasi listrik.");
-const msgPenawaran = encodeURIComponent("Halo Bregas Elektrik, bisa minta estimasi / penawaran harga untuk pengerjaan listrik?");
-
 const linkKonsultasi = `https://wa.me/${waNumber}?text=${msgKonsultasi}`;
-const linkPenawaran = `https://wa.me/${waNumber}?text=${msgPenawaran}`;
+
+// PERBAIKAN: Mengganti link WA penawaran menjadi rute internal menuju section Layanan
+const linkLayanan = "/#layanan"; 
 
 const bgImage = "/bg-hero.jpg";
 ---
 
-<!-- UPDATE: Mengganti min-h-[70vh] menjadi min-h-screen dan memastikan w-full agar full frame -->
 <section 
   class="relative w-full min-h-screen flex items-center bg-cover bg-center bg-no-repeat text-white pt-20 border-b border-border-custom/20"
   style={`background-image: url('${bgImage}');`}
 >
-  <!-- Overlay Hitam Transparan -->
   <div class="absolute inset-0 bg-black/55 pointer-events-none"></div>
 
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full py-12 md:py-20">
@@ -34,7 +32,6 @@ const bgImage = "/bg-hero.jpg";
 
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-4">
         
-        <!-- Tombol Utama -->
         <a 
           href={linkKonsultasi}
           target="_blank"
@@ -45,15 +42,12 @@ const bgImage = "/bg-hero.jpg";
           Tanya / Konsultasi Dulu
         </a>
 
-        <!-- Tombol Kedua -->
         <a 
-          href={linkPenawaran}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={linkLayanan}
           class="inline-flex items-center justify-center gap-2 bg-black/40 hover:bg-black/60 text-white font-bold py-3 px-6 rounded-xl border border-white/20 backdrop-blur-xs transition-all duration-200 text-sm group"
         >
-          <FileText class="w-4 h-4 text-slate-300 group-hover:text-white transition-colors" />
-          Minta Estimasi Biaya
+          <Sparkles class="w-4 h-4 text-accent group-hover:scale-110 transition-transform" />
+          Lihat Layanan Kami
         </a>
         
       </div>

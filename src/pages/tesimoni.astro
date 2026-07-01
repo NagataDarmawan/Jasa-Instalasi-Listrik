@@ -47,6 +47,9 @@ const testimonials = [
     text: "Instalasi jalur listrik untuk mesin jahit industri ringan dikerjakan dengan perhitungan beban puncak yang matang. Sejak dikerjakan oleh BREGAS Elektrik, tidak pernah ada kendala listrik mati sebelah atau tegangan turun lagi."
   }
 ];
+
+// Menduplikasi data agar transisi looping berjalan mulus tanpa celah kosong
+const doubledTestimonials = [...testimonials, ...testimonials];
 ---
 
 <section id="testimoni" class="py-24 bg-primary border-b border-white/[0.08] relative overflow-hidden">
@@ -63,16 +66,18 @@ const testimonials = [
       </p>
       <div class="w-16 h-1 bg-accent mx-auto mt-5 rounded-full"></div>
     </div>
+  </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {testimonials.map((item) => (
+  <div class="flex overflow-hidden w-full mask-gradient select-none">
+    <div class="flex gap-6 animate-marquee whitespace-nowrap hover:[animation-play-state:paused]">
+      {doubledTestimonials.map((item) => (
         
         <div 
-          class="flex flex-col justify-between p-8 bg-white/[0.03] backdrop-blur-lg border border-white/10 rounded-2xl shadow-2xl hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300 transform hover:-translate-y-1"
+          class="flex flex-col justify-between p-8 bg-white/[0.03] backdrop-blur-lg border border-white/10 rounded-2xl shadow-2xl hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300 w-[350px] shrink-0 whitespace-normal"
         >
           <div class="space-y-4">
             <div class="flex items-center gap-1">
-              {[...Array(item.rating)].map(() => (
+              {[...Array(item.rating)].map((_) => (
                 <Star class="w-4 h-4 fill-accent text-accent" />
               ))}
             </div>
@@ -87,10 +92,10 @@ const testimonials = [
               <User class="w-4 h-4" />
             </div>
             <div>
-              <h4 class="font-bold text-white text-sm tracking-tight">
+              <h4 class="font-bold text-white text-sm tracking-tight text-left">
                 {item.name}
               </h4>
-              <p class="text-xs text-white/60 font-medium mt-0.5">
+              <p class="text-xs text-white/60 font-medium mt-0.5 text-left">
                 {item.role} &bull; {item.location}
               </p>
             </div>
@@ -98,6 +103,29 @@ const testimonials = [
         </div>
       ))}
     </div>
-
   </div>
 </section>
+
+<style>
+  /* Efek blur transparan di kanan-kiri container agar transisi masuk/keluar halus */
+  .mask-gradient {
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
+  /* Animasi menggeser container dari koordinat 0 ke -50% (setengah dari array duplikat) */
+  .animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+</style>

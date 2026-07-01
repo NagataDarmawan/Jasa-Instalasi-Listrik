@@ -1,6 +1,6 @@
 ---
 // src/components/Contact.astro
-import { Mail, MessageCircle, MapPin, Phone, Facebook, Instagram, ShieldCheck, Clock, Zap } from 'lucide-astro';
+import { Mail, MessageCircle, MapPin, Phone, Facebook, Instagram, ShieldCheck, Clock, Zap, CalendarDays } from 'lucide-astro';
 import '../styles/global.css';
 
 const waNumber = "6285712425961";
@@ -38,8 +38,13 @@ const contactChannels = [
   }
 ];
 
-// PERBAIKAN: Menambahkan indikator jaminan layanan teknis industri untuk mengisi kekosongan card kanan
+// PERBAIKAN: Menambahkan item Jam Operasional ke dalam parameter akuntabilitas layanan teknik industri
 const serviceGuarantees = [
+  {
+    title: "Jam Operasional",
+    desc: "Senin - Sabtu: 08.00 - 17.00 WIB (Minggu Libur)",
+    icon: CalendarDays
+  },
   {
     title: "Estimasi Respons",
     desc: "Maksimal 15 Menit via WhatsApp",
@@ -138,7 +143,7 @@ const serviceGuarantees = [
           </p>
         </div>
         
-        <!-- PERBAIKAN VISUAL: Menambahkan list parameter akuntabilitas layanan teknik industri -->
+        <!-- PERBAIKAN VISUAL: Menampilkan list parameter layanan beserta jam operasional -->
         <div class="space-y-4 bg-background/40 p-4 border border-border-custom/40 rounded-xl">
           {serviceGuarantees.map(guarantee => {
             const GuaranteeIcon = guarantee.icon;

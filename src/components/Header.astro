@@ -6,8 +6,10 @@ const currentPath = Astro.url.pathname;
 
 const navItems = [
   { name: 'Beranda', href: '#' },
-  { name: 'Tentang Kami', href: '#tentang' }, 
+  { name: 'Tentang Kami', href: '/#tentang' }, 
   { name: 'Layanan', href: '/#layanan' },
+    // PERBAIKAN: Menambahkan Alur Pengerjaan di sini
+  { name: 'Alur Pengerjaan', href: '/#alurPengerjaan' }, 
   { name: 'Proyek', href: '/#portfolio' }, 
   { name: 'FAQ', href: '/#faq' },
   { name: 'Kontak', href: '/#kontak' },
@@ -24,7 +26,6 @@ const catalogLink = "/catalogLayanan";
     <div class="flex items-center justify-between h-20">
       
       <a href="#" class="flex items-center gap-2.5 font-extrabold text-xl tracking-tight" id="logo-text">
-        <!-- PERBAIKAN: Menyesuaikan ukuran menjadi w-12 h-12 (48px) agar proporsional -->
         <img 
           src="/logo-bregas.jpeg" 
           alt="Logo Bregas Elektrik" 
@@ -177,8 +178,10 @@ const catalogLink = "/catalogLayanan";
 
       if (activeSectionId === 'tentang') {
         currentActiveHref = '#tentang';
-      } else if (activeSectionId === 'layanan' || activeSectionId === 'alurPengerjaan') {
+      } else if (activeSectionId === 'layanan') {
         currentActiveHref = '/#layanan';
+      } else if (activeSectionId === 'alurPengerjaan') {
+        currentActiveHref = '#alurPengerjaan'; // Perbaikan logika aktif saat scroll
       } else if (activeSectionId === 'portfolio' || activeSectionId === 'testimoni') {
         currentActiveHref = '/#portfolio'; 
       } else if (activeSectionId === 'faq') {

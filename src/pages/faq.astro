@@ -27,35 +27,37 @@ const faqs = [
 ];
 ---
 
-<section id="faq" class="py-24 bg-primary border-b border-white/[0.08]">
+{/* PERBAIKAN: Mengubah bg-primary menjadi bg-white dan border menyesuaikan warna terang */}
+<section id="faq" class="py-24 bg-white border-b border-border-custom/20">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <div class="text-center mb-16">
       <h2 class="text-xs font-bold tracking-wider uppercase text-accent mb-2">Pusat Bantuan</h2>
-      <p class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+      {/* PERBAIKAN: Mengubah text-white menjadi text-primary */}
+      <p class="text-2xl sm:text-3xl font-extrabold tracking-tight text-primary">
         Pertanyaan yang Sering Diajukan
       </p>
       <div class="w-16 h-1 bg-accent mx-auto mt-5 rounded-full"></div>
     </div>
 
+    {/* Layout grid diseragamkan sepenuhnya */}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-      {faqs.map((item, index) => (
-        <div 
-          class={`bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-xl overflow-hidden group transition-all duration-200 hover:border-white/20 shadow-sm ${
-            index === faqs.length - 1 ? 'md:col-span-2' : ''
-          }`}
-        >
+      {faqs.map((item) => (
+        /* PERBAIKAN: Mengubah background item menjadi bg-slate-50 dan menghapus kondisi md:col-span-2 */
+        <div class="bg-slate-50 border border-slate-200/60 rounded-xl overflow-hidden group transition-all duration-200 hover:border-slate-300 shadow-xs">
           <button 
-            class="w-full flex items-center justify-between p-6 text-left focus:outline-none gap-4"
+            class="w-full flex items-center justify-between p-6 text-left focus:outline-none gap-4 cursor-pointer"
             onclick="this.parentElement.querySelector('.faq-content').classList.toggle('hidden'); this.querySelector('.chevron').classList.toggle('rotate-180');"
           >
-            <span class="font-bold text-white text-sm sm:text-base tracking-tight leading-snug group-hover:text-accent transition-colors">
+            {/* PERBAIKAN: Mengubah warna teks pertanyaan ke warna gelap (text-primary) */}
+            <span class="font-bold text-primary text-sm sm:text-base tracking-tight leading-snug group-hover:text-accent transition-colors">
               {item.q}
             </span>
             <ChevronDown class="chevron w-5 h-5 text-accent transition-transform duration-300 shrink-0" />
           </button>
           
-          <div class="faq-content hidden px-6 pb-6 text-sm font-normal text-white/80 leading-relaxed border-t border-white/5 pt-4">
+          {/* PERBAIKAN: Mengubah warna teks jawaban ke text-slate-600 dan border internal menyesuaikan */}
+          <div class="faq-content hidden px-6 pb-6 text-sm font-normal text-slate-600 leading-relaxed border-t border-slate-200/60 pt-4">
             {item.a}
           </div>
         </div>
